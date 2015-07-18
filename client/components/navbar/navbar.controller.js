@@ -7,6 +7,7 @@ angular.module('fccnightlifeApp')
       'link': '/'
     }];
 
+    $scope.loginPopup = Auth.loginPopup;
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;
@@ -14,7 +15,7 @@ angular.module('fccnightlifeApp')
 
     $scope.logout = function() {
       Auth.logout();
-      $location.path('/login');
+      $location.path('/');
     };
 
     $scope.isActive = function(route) {

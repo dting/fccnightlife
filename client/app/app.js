@@ -7,7 +7,8 @@ angular.module('fccnightlifeApp', [
   'btford.socket-io',
   'ui.router',
   'ngMaterial',
-  'uiGmapgoogle-maps'
+  'uiGmapgoogle-maps',
+  'ngMessages'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, uiGmapGoogleMapApiProvider) {
     $urlRouterProvider
