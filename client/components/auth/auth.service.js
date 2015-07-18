@@ -10,10 +10,7 @@ angular.module('fccnightlifeApp').factory('Auth',
     return {
       loginPopup : function(ev) {
         $mdDialog.show({
-          controller: function($scope, $location, $window) {
-            $scope.user = {};
-            $scope.errors = {};
-
+          controller: function($scope, $mdDialog, $window) {
             $scope.loginOauth = function(provider) {
               $window.location.href = '/auth/' + provider;
             };
