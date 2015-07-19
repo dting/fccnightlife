@@ -1,20 +1,28 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
-
-<md-content layout="column" layout-align="center center" flex>
-  <md-content layout="row" layout-align="center center" flex layout-margin class="search-bar">
-    <md-icon md-font-set="material-icons" class="md-primary md-24" layout-margin>
-      place
-    </md-icon>
-
-    <form layout-margin flex>
-      <md-input-container>
-        <label>Location?</label>
-        <input name="place" ng-model="location" type="text">
-      </md-input-container>
-    </form>
+<md-content ng-include="'components/navbar/navbar.html'" class="nav-bar"></md-content>
+<md-content flex layout="column" class="main-content"">
+  <md-content layout="row" layout-align="center center" flex class="search-bar-wrapper">
+    <md-content layout="row" layout-align="center center" layout-margin flex>
+      <md-icon md-font-set="material-icons" class="md-primary md-24" layout-margin>
+        place
+      </md-icon>
+      <form name="form" flex>
+        <md-input-container>
+          <label>Location?</label>
+          <input name="location" type="text" ng-model="user.location">
+          <div ng-messages="form.location.$error">
+            <div ng-message="location">Nothing found for this location.</div>
+          </div>
+        </md-input-container>
+      </form>
 
     <span class="">
-      <md-button type="submit" class="md-raised md-primary" ng-click="addThing()">Search</md-button>
+      <md-button type="submit" class="md-raised md-primary" ng-click="searchLocation()">Search</md-button>
     </span>
+    </md-content>
+  </md-content>
+
+  <md-content flex ng-if="places.length">
+    <pre>{{places | json}}</pre>
   </md-content>
 </md-content>
+
