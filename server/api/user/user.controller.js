@@ -5,16 +5,12 @@ var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 
-var validationError = function(res, err) {
-  return res.json(422, err);
-};
-
 /**
  * Get list of users
  * restriction: 'admin'
  */
 exports.index = function(req, res) {
-  User.find({}, '-salt -hashedPassword', function(err, users) {
+  User.find({}, function(err, users) {
     if (err) return res.send(500, err);
     res.json(200, users);
   });

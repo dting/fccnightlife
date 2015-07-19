@@ -26,8 +26,9 @@ exports.location = function(req, res) {
 
 // Finds or creates a place using the yelp url.
 function findOrCreate(business, callback) {
-  Place.findOrCreate({_id:business.url}, function(err, place, created) {
+  Place.findOrCreate({url:business.url}, function(err, place, created) {
     if (created) {
+      place.url = business.url;
       place.name = business.name;
       place.rating_img_url = business.rating_img_url;
       place.save(function(saveErr) {
@@ -39,36 +40,32 @@ function findOrCreate(business, callback) {
   });
 }
 
-// Creates a new place in the DB.
-exports.create = function(req, res) {
-  Place.create(req.body, function(err, place) {
-    if (err) {
-      return handleError(res, err);
+exports.addMe = function(req, res) {
+  var userId = req.user.id;
+  Place.findById(req.params.id, function(err, place) {
+    if (err) {return handleError(res, err);}
+    if (_.indexOf(place.going, userId) < 0) {
+      place.going.push(userId);
+      place.save(function(saveErr) {
+        if (saveErr) {return handleError(res, saveErr)}
+        return res.json(200, place);
+      });
+    } else {
+      return res.json(200, place);
     }
-    return res.json(201, place);
   });
 };
 
-// Updates an existing place in the DB.
-exports.update = function(req, res) {
-  if (req.body._id) {
-    delete req.body._id;
-  }
+exports.removeMe = function(req, res) {
+  var userId = req.user.id;
   Place.findById(req.params.id, function(err, place) {
-    if (err) {
-      return handleError(res, err);
-    }
-    if (!place) {
-      return res.send(404);
-    }
-    var updated = _.merge(place, req.body);
-    updated.save(function(err) {
-      if (err) {
-        return handleError(res, err);
-      }
+    if (err) {return handleError(res, err);}
+    place.going.pull(userId);
+    place.save(function(saveErr) {
+      if (saveErr) {return handleError(res, saveErr)}
       return res.json(200, place);
     });
-  });
+  })
 };
 
 // Deletes a place from the DB.

@@ -1,41 +1,50 @@
 <md-content ng-include="'components/navbar/navbar.html'" class="nav-bar"></md-content>
-<md-content flex layout="column" class="main-content"">
+
+<md-content flex layout="column" class="main-content">
   <md-content layout="row" layout-align="center center" flex class="search-bar-wrapper">
-    <md-content layout="row" layout-align="center center" layout-margin flex>
-      <md-icon md-font-set="material-icons" class="md-primary md-24" layout-margin>
-        place
-      </md-icon>
-      <form name="form" flex>
-        <md-input-container>
-          <label>Location?</label>
-          <input name="location" type="text" ng-model="user.location">
+    <form name="form" flex>
+      <md-content layout="row" layout-align="center center" layout-margin flex>
+
+
+        <md-icon md-font-set="material-icons" class="md-primary md-36">
+          place
+        </md-icon>
+        <md-input-container class="search-input-container" flex>
+          <label>Where are you?</label>
+          <input name="location" type="text" ng-model="user.location" flex>
+
           <div ng-messages="form.location.$error">
             <div ng-message="location">Nothing found for this location.</div>
           </div>
         </md-input-container>
-      </form>
 
-    <span class="">
-      <md-button type="submit" class="md-raised md-primary" ng-click="searchLocation()">Search</md-button>
-    </span>
-    </md-content>
+        <md-button type="submit" class="md-raised md-primary" ng-click="searchLocation()">Search</md-button>
+      </md-content>
+    </form>
   </md-content>
 
   <md-content flex ng-if="places.length">
     <md-list>
       <md-list-item class="md-2-line" ng-repeat="place in places">
-        <md-content layout="row" flex>
-          <md-checkbox aria-label="{{place.name}}" class="md-margin"></md-checkbox>
+        <md-content layout="row" layout-align="center center" flex>
+          <md-button aria-label="{{place.name}}"
+                     class="md-raised md-primary"
+                     ng-if="!going(place)"
+                     ng-click="addMe(place)">Add Me
+          </md-button>
+          <md-button aria-label="{{place.name}}"
+                     class="md-raised md-accent"
+                     ng-if="going(place)"
+                     ng-click="removeMe(place)">Remove Me</md-button>
           <div class="md-list-item-text" flex layout-margin>
             <h3><a ng-href="{{place.url}}" target="_blank">{{ place.name }}</a></h3>
             <img ng-src="{{place.rating_img_url}}">
           </div>
-          <div layout="row" layout-align="center center" layout-margin>
-            {{place.going.length || 0}} Going
+          <div layout="row" layout-align="center center" layout-margin class="md-chips md-default-theme">
+            <span class="md-chip md-default-theme">{{place.going.length || 0}} Going</span>
           </div>
         </md-content>
       </md-list-item>
     </md-list>
   </md-content>
 </md-content>
-

@@ -1,6 +1,7 @@
 <div ng-controller="NavbarCtrl">
   <md-toolbar>
     <div class="md-toolbar-tools">
+      <div class="brand">NightLife</div>
       <span flex></span>
       <md-button aria-label="logout" ng-click="logout()" ng-if="isLoggedIn()">
         {{ getCurrentUser().name }}
