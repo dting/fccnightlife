@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Place = require('./place.model');
+var async = require('async');
 var config = require('../../config/environment');
 var yelp = require('yelp').createClient({
   consumer_key: config.yelp.clientID,
@@ -15,23 +16,28 @@ exports.location = function(req, res) {
   yelp.search({term: "bar", location: req.params.location}, function(err, data) {
     if (err) {return handleError(res, err);}
     if (!data) {return res.send(404);}
-    var places = _.map(data.businesses, function(obj) { return _.pick(obj, ['name', 'url', 'rating', 'rating_img_url'])});
-    return res.json(200, places);
+    async.map(data.businesses, findOrCreate, function(err, results) {
+      if (err) {return handleError(res, err);}
+      console.log(results);
+      return res.json(200, results);
+    });
   });
 };
 
-// Get a single place
-exports.show = function(req, res) {
-  Place.findById(req.params.id, function(err, place) {
-    if (err) {
-      return handleError(res, err);
+// Finds or creates a place using the yelp url.
+function findOrCreate(business, callback) {
+  Place.findOrCreate({_id:business.url}, function(err, place, created) {
+    if (created) {
+      place.name = business.name;
+      place.rating_img_url = business.rating_img_url;
+      place.save(function(saveErr) {
+        callback(saveErr, place)
+      });
+    } else {
+      callback(null, place);
     }
-    if (!place) {
-      return res.send(404);
-    }
-    return res.json(place);
   });
-};
+}
 
 // Creates a new place in the DB.
 exports.create = function(req, res) {

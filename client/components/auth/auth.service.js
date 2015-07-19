@@ -22,7 +22,7 @@ angular.module('fccnightlifeApp').factory('Auth',
           templateUrl: 'app/account/login/login.html',
           parent: angular.element(document.body),
           targetEvent: ev
-        }).then(function(answer) {}, function() {});
+        }).then(function() {}, function() {});
       },
 
       /**

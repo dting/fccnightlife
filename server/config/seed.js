@@ -7,6 +7,7 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Place = require('../api/place/place.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -31,4 +32,7 @@ Thing.find({}).remove(function() {
 });
 
 User.find({}).remove(function() {
+});
+
+Place.find({}).remove(function() {
 });

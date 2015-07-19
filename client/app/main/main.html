@@ -22,7 +22,20 @@
   </md-content>
 
   <md-content flex ng-if="places.length">
-    <pre>{{places | json}}</pre>
+    <md-list>
+      <md-list-item class="md-2-line" ng-repeat="place in places">
+        <md-content layout="row" flex>
+          <md-checkbox aria-label="{{place.name}}" class="md-margin"></md-checkbox>
+          <div class="md-list-item-text" flex layout-margin>
+            <h3><a ng-href="{{place.url}}" target="_blank">{{ place.name }}</a></h3>
+            <img ng-src="{{place.rating_img_url}}">
+          </div>
+          <div layout="row" layout-align="center center" layout-margin>
+            {{place.going.length || 0}} Going
+          </div>
+        </md-content>
+      </md-list-item>
+    </md-list>
   </md-content>
 </md-content>
 

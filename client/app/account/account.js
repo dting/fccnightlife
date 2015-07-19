@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('fccnightlifeApp').config(function($stateProvider) {});
+angular.module('fccnightlifeApp').config(function() {});
