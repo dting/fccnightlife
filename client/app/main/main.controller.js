@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('fccnightlifeApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
+angular.module('fccnightlifeApp').controller('MainCtrl', function($scope, $http, socket) {
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
@@ -10,10 +9,10 @@ angular.module('fccnightlifeApp')
     });
 
     $scope.addThing = function() {
-      if($scope.newThing === '') {
+      if ($scope.newThing === '') {
         return;
       }
-      $http.post('/api/things', { name: $scope.newThing });
+      $http.post('/api/things', {name: $scope.newThing});
       $scope.newThing = '';
     };
 
@@ -21,7 +20,30 @@ angular.module('fccnightlifeApp')
       $http.delete('/api/things/' + thing._id);
     };
 
-    $scope.$on('$destroy', function () {
+    $scope.$on('$destroy', function() {
+      socket.unsyncUpdates('thing');
+    });
+  }).controller('PlaceCtrl', function($scope, $http, socket) {
+    $scope.awesomeThings = [];
+
+    $http.get('/api/things').success(function(awesomeThings) {
+      $scope.awesomeThings = awesomeThings;
+      socket.syncUpdates('thing', $scope.awesomeThings);
+    });
+
+    $scope.addThing = function() {
+      if ($scope.newThing === '') {
+        return;
+      }
+      $http.post('/api/things', {name: $scope.newThing});
+      $scope.newThing = '';
+    };
+
+    $scope.deleteThing = function(thing) {
+      $http.delete('/api/things/' + thing._id);
+    };
+
+    $scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
     });
   });
