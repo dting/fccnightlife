@@ -18,7 +18,6 @@ exports.location = function(req, res) {
     if (!data) {return res.send(404);}
     async.map(data.businesses, findOrCreate, function(err, results) {
       if (err) {return handleError(res, err);}
-      console.log(results);
       return res.json(200, results);
     });
   });

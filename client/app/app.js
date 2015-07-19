@@ -7,20 +7,14 @@ angular.module('fccnightlifeApp', [
   'btford.socket-io',
   'ui.router',
   'ngMaterial',
-  'uiGmapgoogle-maps',
   'ngMessages'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, uiGmapGoogleMapApiProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
-    uiGmapGoogleMapApiProvider.configure({
-      //    key: 'your api key',
-      v: '3.17',
-      libraries: 'weather,geometry,visualization'
-    });
   })
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
