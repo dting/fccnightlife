@@ -1,16 +1,17 @@
 'use strict';
 
 angular.module('fccnightlifeApp').factory('Auth',
-  function Auth($location, $rootScope, $http, User, $cookieStore, $q, $mdDialog) {
+  ['$location', '$rootScope', '$http', 'User', '$cookieStore', '$q', '$mdDialog', function($location, $rootScope, $http,
+    User, $cookieStore, $q, $mdDialog) {
     var currentUser = {};
     if ($cookieStore.get('token')) {
       currentUser = User.get();
     }
 
     return {
-      loginPopup : function(ev) {
+      loginPopup: function(ev) {
         $mdDialog.show({
-          controller: function($scope, $mdDialog, $window) {
+          controller: ['$scope', '$mdDialog', '$window', function($scope, $mdDialog, $window) {
             $scope.loginOauth = function(provider) {
               $window.location.href = '/auth/' + provider;
             };
@@ -18,11 +19,10 @@ angular.module('fccnightlifeApp').factory('Auth',
             $scope.cancel = function() {
               $mdDialog.hide();
             };
-          },
-          templateUrl: 'app/account/login/login.html',
-          parent: angular.element(document.body),
-          targetEvent: ev
-        }).then(function() {}, function() {});
+          }], templateUrl: 'app/account/login/login.html', parent: angular.element(document.body), targetEvent: ev
+        }).then(function() {
+        }, function() {
+        });
       },
 
       /**
@@ -86,4 +86,4 @@ angular.module('fccnightlifeApp').factory('Auth',
         return $cookieStore.get('token');
       }
     };
-  });
+  }]);
