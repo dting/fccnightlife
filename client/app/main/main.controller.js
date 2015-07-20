@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('fccnightlifeApp').controller('MainCtrl',
-  ['$scope', '$http', 'socket', 'Auth', '$state', '$cookieStore', '$stateParams', function($scope, $http, socket, Auth, $state,
-    $cookieStore, $stateParams) {
+  ['$scope', '$http', 'socket', 'Auth', '$state', '$cookieStore', function($scope, $http, socket, Auth, $state,
+    $cookieStore) {
     $scope.user = {};
 
     $scope.searchLocation = function() {
