@@ -3,14 +3,17 @@
     <md-list-item class="md-2-line" ng-repeat="place in places">
       <md-content layout="row" layout-align="center center" flex>
         <md-button aria-label="{{place.name}}"
-                   class="md-raised md-primary"
+                   class="md-raised md-primary md-icon-button"
                    ng-if="!going(place)"
-                   ng-click="addMe(place)">Add Me
+                   ng-click="addMe(place)">
+          <md-icon md-icon-set="material-icons">add</md-icon>
         </md-button>
         <md-button aria-label="{{place.name}}"
-                   class="md-raised md-accent"
+                   class="md-raised md-accent md-icon-button"
                    ng-if="going(place)"
-                   ng-click="removeMe(place)">Remove Me</md-button>
+                   ng-click="removeMe(place)">
+          <md-icon md-icon-set="material-icons">remove</md-icon>
+        </md-button>
         <div class="md-list-item-text" flex layout-margin>
           <h3><a ng-href="{{place.url}}" target="_blank">{{ place.name }}</a></h3>
           <img ng-src="{{place.rating_img_url}}">

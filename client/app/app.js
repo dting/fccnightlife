@@ -9,12 +9,15 @@ angular.module('fccnightlifeApp', [
   'ngMaterial',
   'ngMessages'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdThemingProvider) {
     $urlRouterProvider
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
+    $mdThemingProvider.theme('default')
+      .primaryPalette('blue')
+      .accentPalette('deep-purple');
   })
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
