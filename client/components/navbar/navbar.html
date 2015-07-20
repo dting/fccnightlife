@@ -1,10 +1,11 @@
 <div ng-controller="NavbarCtrl">
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <div class="brand">NightLife</div>
+      <md-button class="brand" ui-sref="main">NightLife</md-button>
       <span flex></span>
       <md-button aria-label="logout" ng-click="logout()" ng-if="isLoggedIn()">
         {{ getCurrentUser().name }}
+        <md-tooltip md-direction="left">Logout</md-tooltip>
       </md-button>
       <md-button aria-label="login" ng-click="loginPopup($event)" ng-if="!isLoggedIn()">
         Login

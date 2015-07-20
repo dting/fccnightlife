@@ -15,7 +15,6 @@ angular.module('fccnightlifeApp')
 
     $scope.logout = function() {
       Auth.logout();
-      $location.path('/');
     };
 
     $scope.isActive = function(route) {

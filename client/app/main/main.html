@@ -1,8 +1,8 @@
 <md-content ng-include="'components/navbar/navbar.html'" class="nav-bar"></md-content>
 
 <md-content flex layout="column" class="main-content">
-  <md-content layout="row" layout-align="center center" flex class="search-bar-wrapper">
-    <form name="form" flex>
+  <md-content layout="column" layout-align="center center" flex class="search-bar-wrapper">
+    <form name="form" class="search-form">
       <md-content layout="row" layout-align="center center" layout-margin flex>
 
 
@@ -22,29 +22,5 @@
       </md-content>
     </form>
   </md-content>
-
-  <md-content flex ng-if="places.length">
-    <md-list>
-      <md-list-item class="md-2-line" ng-repeat="place in places">
-        <md-content layout="row" layout-align="center center" flex>
-          <md-button aria-label="{{place.name}}"
-                     class="md-raised md-primary"
-                     ng-if="!going(place)"
-                     ng-click="addMe(place)">Add Me
-          </md-button>
-          <md-button aria-label="{{place.name}}"
-                     class="md-raised md-accent"
-                     ng-if="going(place)"
-                     ng-click="removeMe(place)">Remove Me</md-button>
-          <div class="md-list-item-text" flex layout-margin>
-            <h3><a ng-href="{{place.url}}" target="_blank">{{ place.name }}</a></h3>
-            <img ng-src="{{place.rating_img_url}}">
-          </div>
-          <div layout="row" layout-align="center center" layout-margin class="md-chips md-default-theme">
-            <span class="md-chip md-default-theme">{{place.going.length || 0}} Going</span>
-          </div>
-        </md-content>
-      </md-list-item>
-    </md-list>
-  </md-content>
+  <div ui-view></div>
 </md-content>

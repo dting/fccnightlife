@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('fccnightlifeApp').factory('Auth',
-  ['$location', '$rootScope', '$http', 'User', '$cookieStore', '$q', '$mdDialog', function($location, $rootScope, $http,
-    User, $cookieStore, $q, $mdDialog) {
+  ['$location', '$rootScope', '$http', 'User', '$cookieStore', '$q', '$mdDialog', '$stateParams', function($location, $rootScope, $http,
+    User, $cookieStore, $q, $mdDialog, $stateParams) {
     var currentUser = {};
     if ($cookieStore.get('token')) {
       currentUser = User.get();
@@ -10,6 +10,9 @@ angular.module('fccnightlifeApp').factory('Auth',
 
     return {
       loginPopup: function(ev) {
+        if ($stateParams.location) {
+          $cookieStore.put('location', $stateParams.location);
+        }
         $mdDialog.show({
           controller: ['$scope', '$mdDialog', '$window', function($scope, $mdDialog, $window) {
             $scope.loginOauth = function(provider) {
@@ -17,11 +20,12 @@ angular.module('fccnightlifeApp').factory('Auth',
             };
 
             $scope.cancel = function() {
+              $cookieStore.remove('location');
               $mdDialog.hide();
             };
           }], templateUrl: 'app/account/login/login.html', parent: angular.element(document.body), targetEvent: ev
         }).then(function() {
-        }, function() {
+          console.log('LoggedIn.');
         });
       },
 
